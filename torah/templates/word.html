@@ -1,0 +1,10 @@
+{% load static %}
+{% load extra_filters %}
+<div style="font: Arial, Helvetica, sans-serif;color:#333333">
+	<p class="text-right">{% for l in word %}<span class="icon-{{ l | get_letternumber }}"></span>{% endfor %}</p>		
+	{% if pron != '-' %}
+		<p>{{pron}}</p>
+		<p><strong>{{eng}}</strong></p>
+		<p>{{def}}</p>
+	{% endif %}
+</div>

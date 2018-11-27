@@ -1,0 +1,54 @@
+/* - - - - - - CSS Document - - - - - - - - -
+
+Title : Global style sheet for client-side web development
+Author : Cody Lindley 
+
+- - - - - - - - - - - - - - - - - - - - - */
+
+
+
+/* ---------->>> jtip <<<---------------------------------------------------------------*/
+
+#JT {
+	position: absolute;
+	z-index:100;
+	border: 2px solid #CCCCCC;
+	background-color: #fff;
+}
+
+#JT_copy{
+	padding:10px 10px 10px 10px;
+	color:#333333;
+}
+
+
+#JT_close_left{
+	background-color: #CCCCCC;
+	text-align: left;
+	padding-left: 8px;
+	padding-bottom: 5px;
+	padding-top: 2px;
+	font-weight:bold;
+}
+
+#JT_close_right{
+	background-color: #CCCCCC;
+	text-align: left;
+	padding-left: 8px;
+	padding-bottom: 5px;
+	padding-top: 2px;
+	font-weight:bold;
+}
+
+#JT_copy p{
+margin:3px 0;
+}
+
+#JT_copy img{
+	padding: 1px;
+	border: 1px solid #CCCCCC;
+}
+
+.jTip{
+cursor:pointer;
+}
