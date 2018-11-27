@@ -12,7 +12,7 @@ def get_line(lang,c):
 
 def showline(request, title='genesis', chapter=1, line=1):
     if request.method=='POST':
-        return redirect('/%s/%s/%s/'%(request.POST['title'],request.POST['chapter'],request.POST['line']))
+        return redirect('torah/%s/%s/%s/'%(request.POST['title'],request.POST['chapter'],request.POST['line']))
 
     context = {'current': {'title':title, 'chapter':chapter, 'line':line}}
 
@@ -22,7 +22,7 @@ def showline(request, title='genesis', chapter=1, line=1):
         if lang == 'paleo':
             context[lang] = context[lang][::-1]
 
-    return render(request,'line.html',context)
+    return render(request,'torah/line.html',context)
 
 def showword(request):
     """
@@ -44,7 +44,7 @@ def showword(request):
         'eng':trans[2],
         'def':trans[3]
     }
-    return render(request,'word.html',context)
+    return render(request,'torah/word.html',context)
 
 
 class AjaxView(View):

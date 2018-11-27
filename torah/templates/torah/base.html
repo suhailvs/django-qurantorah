@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<form method="post">{% csrf_token %}            
+  <div class="form-row">
+    <div class="col">
+      <select class="form-control form-control-sm" name="title" required>
+        <option{%if current.title == "genesis"%} selected{%endif%}>genesis</option>
+        <option{%if current.title == "exodus"%} selected{%endif%}>exodus</option>
+        <option{%if current.title == "leviticus"%} selected{%endif%}>leviticus</option>
+        <option{%if current.title == "numbers"%} selected{%endif%}>numbers</option>
+        <option{%if current.title == "deuteronomy"%} selected{%endif%}>deuteronomy</option>
+      </select>
+    </div>
+    <div class="col">
+      <input class="form-control form-control-sm" type="number" value="{{current.chapter}}" 
+        name="chapter" placeholder="Chapter" required>
+    </div>
+    <div class="col">
+      <input class="form-control form-control-sm" type="number" value="{{current.line}}" 
+       name="line" required>
+    </div>
+    <div class="col"><input type="submit" class="btn btn-primary btn-sm" type="submit"></div>
+  </div>
+</form><hr>
+{% block content %}
+{% endblock %}
+{% endblock %}
+
+          

@@ -1,4 +1,4 @@
-# torah
+# Quran_Torah
 
 Installation::
 
