@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'css/jtip.css' %}"> -->
+  <style type="text/css">
+    .trans_word_hover { color: green !important; }
+    .trans_word {
+      border-bottom: 1px solid maroon; 
+      padding:2px; 
+      margin:5px; 
+      line-height: 25px;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+<form method="post">{% csrf_token %}            
+  <div class="form-row">
+    <div class="col">
+      <select class="form-control form-control-sm" name="sura" required>
+        {% for sura in suras %}
+        <option{%if current.sura == sura.number %} selected{%endif%} value="{{sura.number}}">{{sura.tname}} ({{sura.name}})</option>
+        {% endfor %}
+      </select>
+    </div>    
+    <div class="col">
+      <input class="form-control form-control-sm" type="number" value="{{current.aya}}" 
+       name="aya" required>
+    </div>
+    <div class="col"><input type="submit" class="btn btn-primary btn-sm" type="submit"></div>
+  </div>
+</form><hr>
+
+<div class="card">
+  <div class="card-header"> {{current.sura.name}} : {{current.aya}} </div>  
+  
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{translation.text}}</li>
+    <li class="list-group-item text-right arab">
+      <!-- {{arabic.text}} -->
+      {% for word in words %}
+        <a class="jTip" style="cursor: pointer;" id="word{{forloop.counter}}" data-wordid="{{word.id}}" data-paleo="{{word.paleo}}"><span style="font-size: 150%">{{ word.token }}</span></a>
+      {% endfor %}
+    </li>
+
+    <li class="list-group-item"><!-- translation -->
+      {% for word in words %}
+      <span class="trans_word" data-n="{{forloop.counter}}">{{word.translation}}</span>
+      {% endfor %}
+    </li>
+    <li class="list-group-item text-right"> 
+      <a class="btn btn-default btn-sm" href="/quran/{{current.sura.number}}/{{current.aya|add:"-1"}}/">&lt;- prev</a> 
+      <a class="btn btn-default btn-sm" href="/quran/{{current.sura.number}}/{{current.aya|add:"1"}}/">next -&gt;</a>
+    </li>    
+    
+  </ul>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="wordDataModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Word Data</h5>
+      </div>
+      <div class="modal-body">
+        <form id="word_form">{% csrf_token %}
+          <input type="hidden" name="id" id="word_id">
+          <div class="form-group">            
+            <input type="text" name="paleo" class="form-control" id="word_paleo">
+          </div>          
+        </form>
+      </div>
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-primary btn-sm" id="save_description" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+$('.trans_word').hover(function(){
+  // when mouse hover on english word
+  $(this).toggleClass('trans_word_hover');
+  const word_num = $(this).data('n');
+  $("#word"+word_num).toggleClass('trans_word_hover');
+});
+
+$('.jTip').click(function(){
+  // show bootstrap modal;
+  
+  $("#word_id").val($(this).data('wordid'));
+  $("#word_paleo").val($(this).data('paleo'));
+
+  $('#wordDataModal').modal();
+})
+
+$('#save_description').click(function(){
+    // save description to database
+  $.post('/quran/ajaxview/', $("#word_form").serialize());
+});
+</script>
+{% endblock %}

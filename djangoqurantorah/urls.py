@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
+from quran.views import showline
+# from django.views.generic import TemplateView
 urlpatterns = [
-	path('', TemplateView.as_view(template_name="home.html")),
+	# path('', TemplateView.as_view(template_name="home.html")),
 	# path('q/<int:sura>/<int:aya>/<slug:title>/<int:chapter>/<int:line>/', home),
+    path('', showline),
     path('quran/', include('quran.urls')),
     path('torah/', include('torah.urls')),  
     path('admin/', admin.site.urls),

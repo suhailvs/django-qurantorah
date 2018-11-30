@@ -12,7 +12,7 @@ def get_line(lang,c):
 
 def showline(request, title='genesis', chapter=1, line=1):
     if request.method=='POST':
-        return redirect('torah/%s/%s/%s/'%(request.POST['title'],request.POST['chapter'],request.POST['line']))
+        return redirect('/torah/%s/%s/%s/'%(request.POST['title'],request.POST['chapter'],request.POST['line']))
 
     context = {'current': {'title':title, 'chapter':chapter, 'line':line}}
 

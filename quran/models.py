@@ -137,6 +137,7 @@ class Word(models.Model):
     lemma = models.ForeignKey(Lemma, on_delete=models.CASCADE)
     ename = models.CharField(max_length=50, blank=True)
     translation = models.CharField(max_length=200,blank=True)
+    paleo = models.CharField(max_length=200,blank=True)
 
     class Meta:
         unique_together = (('aya', 'number'))

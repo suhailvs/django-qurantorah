@@ -20,9 +20,14 @@
 
   <body>
     <div class="container"> 
-      <a href="/">home</a>
-      {% block body %}
-      {% endblock %}      
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-sm-12">
+          <a href="/quran/">quran</a> | 
+          <a href="/torah/">torah</a>
+          {% block body %}
+          {% endblock %}
+        </div>
+      </div>
     </div> <!-- /container -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/bootstrap.js' %}" type="text/javascript"></script>
