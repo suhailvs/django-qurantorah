@@ -31,7 +31,7 @@
     <li class="list-group-item">{{english_mtt}}</li> 
     <li class="list-group-item">
       {% for word in paleo|get_words %}
-        <a href="/word/?word={{word}}" class="jTip" id="word{{forloop.counter}}" data-word="{{word}}">{{word}}</a>
+        <a href="/torah/word/?word={{word}}" class="jTip" id="word{{forloop.counter}}" data-word="{{word}}">{{word}}</a>
       {% endfor %}
     </li>   
      <li class="list-group-item" style="font-size: 75%">
@@ -41,8 +41,8 @@
     </li>    
 
     <li class="list-group-item text-right"> 
-      <a class="btn btn-default btn-sm" href="/{{current.title}}/{{current.chapter}}/{{current.line |add:"-1"}}/">&lt;- prev</a> 
-      <a class="btn btn-default btn-sm" href="/{{current.title}}/{{current.chapter}}/{{current.line |add:"1"}}/">next -&gt;</a>
+      <a class="btn btn-default btn-sm" href="/torah/{{current.title}}/{{current.chapter}}/{{current.line |add:"-1"}}/">&lt;- prev</a> 
+      <a class="btn btn-default btn-sm" href="/torah/{{current.title}}/{{current.chapter}}/{{current.line |add:"1"}}/">next -&gt;</a>
     </li>    
     
   </ul>
@@ -99,7 +99,7 @@
 {% block js %}
 <script src="{% static 'js/jtip.js' %}" type="text/javascript"></script>
 <script type="text/javascript">
-  const ajaxurl = '/ajaxview/';
+  const ajaxurl = '/torah/ajaxview/';
 
   $('.jTip').click(function(){
     // when a hebrew word is clicked
@@ -115,7 +115,7 @@
       let links = '';
       for (i=0; i < data.lines.length; i++){
         links+= `
-          <a href='/${data.lines[i]['t']}/${data.lines[i]['c']}/${data.lines[i]['l']}/'>
+          <a href='/torah/${data.lines[i]['t']}/${data.lines[i]['c']}/${data.lines[i]['l']}/'>
             ${data.lines[i]['t'][0]} ${data.lines[i]['c']}:${data.lines[i]['l']}
           </a>, `;
       }
