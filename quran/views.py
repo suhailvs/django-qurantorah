@@ -40,7 +40,7 @@ class AjaxView(View):
             else:
                 resp.append({'sura':word.sura.number,'aya':word.aya.number })
 
-        return HttpResponse(json.dumps(resp))
+        return HttpResponse(json.dumps({'root':str(root), 'related_ayas':resp}))
 
     def post(self, request, *args, **kwargs):
         w = Word.objects.get(id = request.POST['id'])

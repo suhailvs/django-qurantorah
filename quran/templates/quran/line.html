@@ -68,6 +68,9 @@
         <form id="word_form">{% csrf_token %}
           <input type="hidden" name="id" id="word_id">
           <div class="form-group">            
+            <input type="text" class="form-control" id="word_root" disabled="">
+          </div>
+          <div class="form-group">            
             <input type="text" name="paleo" class="form-control" id="word_paleo">
           </div>          
         </form>
@@ -101,13 +104,15 @@ $('.jTip').click(function(){
   $("#word_paleo").val($(this).data('paleo'));
 
   $.getJSON('/quran/ajaxview/', { word: word } )
-    .done(function(data) {   
+    .done(function(result) {   
       let links = '';
+      const data = result['related_ayas']
       for (i=0; i < data.length; i++){
         links+= `<a href='/quran/${data[i]['sura']}/${data[i]['aya']}/'>
           ${data[i]['sura']}:${data[i]['aya']}
         </a>, `;
       }
+      $("#word_root").val(result['root']);
       $("#word_lines").html(links);
       $('#wordDataModal').modal();
       $('#collapseLines').collapse('hide')
