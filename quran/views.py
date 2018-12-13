@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
+import json
 
 from .models import Sura, Aya, TranslatedAya, Word
 
@@ -26,6 +27,20 @@ class AjaxView(View):
     """
     To display/save data in Bootstrap Model
     """
+    def get(self, request, *args, **kwargs):
+        resp = []
+        w = request.GET.get('word','')
+        if w: 
+            word = Word.objects.get(id = w)
+            root = word.root
+            if root:
+                ayas = root.ayas.distinct()
+                for aya in ayas:
+                    resp.append({'sura':aya.sura.number,'aya':aya.number })
+            else:
+                resp.append({'sura':word.sura.number,'aya':word.aya.number })
+
+        return HttpResponse(json.dumps(resp))
 
     def post(self, request, *args, **kwargs):
         w = Word.objects.get(id = request.POST['id'])

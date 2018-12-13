@@ -20,7 +20,7 @@
     <div class="col">
       <select class="form-control form-control-sm" name="sura" required>
         {% for sura in suras %}
-        <option{%if current.sura == sura.number %} selected{%endif%} value="{{sura.number}}">{{sura.tname}} ({{sura.name}})</option>
+        <option{%if current.sura.number == sura.number %} selected{%endif%} value="{{sura.number}}">{{sura.tname}} ({{sura.name}})</option>
         {% endfor %}
       </select>
     </div>    
@@ -71,6 +71,11 @@
             <input type="text" name="paleo" class="form-control" id="word_paleo">
           </div>          
         </form>
+        <a style="font-size: 75%" data-toggle="collapse" href="#collapseLines" role="button" aria-expanded="false" aria-controls="collapseLines"> show/hide related lines</a>
+        <div class="collapse" id="collapseLines">
+          <div id="word_lines" style="font-size: 75%">
+          </div>
+        </div>
       </div>
       <div class="modal-footer">        
         <button type="button" class="btn btn-primary btn-sm" id="save_description" data-dismiss="modal">Save changes</button>
@@ -91,11 +96,22 @@ $('.trans_word').hover(function(){
 
 $('.jTip').click(function(){
   // show bootstrap modal;
-  
-  $("#word_id").val($(this).data('wordid'));
+  const word = $(this).data('wordid');
+  $("#word_id").val(word);
   $("#word_paleo").val($(this).data('paleo'));
 
-  $('#wordDataModal').modal();
+  $.getJSON('/quran/ajaxview/', { word: word } )
+    .done(function(data) {   
+      let links = '';
+      for (i=0; i < data.length; i++){
+        links+= `<a href='/quran/${data[i]['sura']}/${data[i]['aya']}/'>
+          ${data[i]['sura']}:${data[i]['aya']}
+        </a>, `;
+      }
+      $("#word_lines").html(links);
+      $('#wordDataModal').modal();
+      $('#collapseLines').collapse('hide')
+  });
 })
 
 $('#save_description').click(function(){
