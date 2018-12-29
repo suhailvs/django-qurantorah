@@ -31,7 +31,7 @@
     <li class="list-group-item">{{english_mtt}}</li> 
     <li class="list-group-item">
       {% for word in paleo|get_words %}
-        <a href="/torah/word/?word={{word}}" class="jTip" id="word{{forloop.counter}}" data-word="{{word}}">{{word}}</a>
+        <a href="/torah/word/?word={{word}}" class="jTip" id="word{{forloop.counter}}" data-word="{{word}}">{{word|replace_fie}}</a>
       {% endfor %}
     </li>   
      <li class="list-group-item" style="font-size: 75%">
