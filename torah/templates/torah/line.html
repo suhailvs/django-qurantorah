@@ -13,6 +13,10 @@
       margin:5px; 
       line-height: 25px;
     }
+    .fontred {
+      font-style: italic;
+      font-weight: bold;
+    }
   </style>
 {% endblock %}
 
@@ -22,17 +26,12 @@
   
   <ul class="list-group list-group-flush">
     <li class="list-group-item">{{english}}</li>
-    <!-- <li class="list-group-item text-right">{{hebrew}}</li>
-    <li class="list-group-item text-right">
-      {% for word in paleo|get_words %}
-        {% for l in word %}{{ l | get_hebrewletter }}{% endfor %}
-      {% endfor %}
-    </li> -->
     <li class="list-group-item">{{english_mtt}}</li> 
-    <li class="list-group-item">
+    <li class="list-group-item paleoline">
       {% for word in paleo|get_words %}
         <a href="/torah/word/?word={{word}}" class="jTip" id="word{{forloop.counter}}" data-word="{{word}}">{{word|replace_fie}}</a>
-      {% endfor %}
+      {% endfor %}  <br>
+      <a class="btn btn-default btn-sm" data-title="{{current.title}}" data-chapter="{{current.chapter}}" data-line="{{current.line}}" id="playaudio">play</a>
     </li>   
      <li class="list-group-item" style="font-size: 75%">
       {% for word in paleo|get_words %}
@@ -47,13 +46,6 @@
     
   </ul>
 </div>
-<!-- <hr>
-<div class="card alert alert-dismissible fade show" role="alert">  
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-  <img src="{% static 'paleo.jpg' %}" width="300px">
-</div> -->
 
 
 <!-- Modal -->
@@ -99,7 +91,22 @@
 {% block js %}
 <script src="{% static 'js/jtip.js' %}" type="text/javascript"></script>
 <script type="text/javascript">
-  const ajaxurl = '/torah/ajaxview/';
+  // AUDIO
+  // https://stackoverflow.com/a/8489802/2351696
+  var audioElement = document.createElement('audio');
+  audioElement.addEventListener('ended', function() {
+    // this.play();
+    $('.paleoline').removeClass('fontred');
+  }, false);
+  $('#playaudio').click(function() {
+    $('.paleoline').addClass('fontred');
+    const fn = $(this).data('title') + '/' + $(this).data('chapter') + '_' + $(this).data('line') + '.mp3'
+    audioElement.setAttribute('src', 'http://localhost:8000/static/audio/'+ fn);
+    audioElement.play();
+  });
+  // End of audio
+
+  const ajaxurl = '/torah/ajaxview/'; 
 
   $('.jTip').click(function(){
     // when a hebrew word is clicked
@@ -139,5 +146,6 @@
     const word_num = $(this).data('n');
     $("#word"+word_num).toggleClass('trans_word_hover');
   });
+
 </script>
 {% endblock %}
