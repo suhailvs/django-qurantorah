@@ -6,6 +6,8 @@ import json
 
 from .models import Word
 
+from .templatetags.torah_filters import fiej
+
 def get_line(lang,c):
     data = json.loads(open('torah/json/%s/%s.json'%(lang,c['title'])).read())
     return data['text'][c['chapter']-1][c['line']-1]
@@ -51,20 +53,29 @@ class AjaxView(View):
     """
     To display data in Bootstrap Model
     """
-
-    def get(self, request, *args, **kwargs):
-        w = request.GET.get('word','')
-        # try:
-        #     item = Word.objects.get(name = w)
-        # except:
-        #     item = Word.objects.get(name = w[::-1])
+    def get_word_details(self, w):
         item = Word.objects.get(name = w[::-1])  # reverse the word
-        return HttpResponse(json.dumps({
+        return json.dumps({
             'id':item.id,
             'description':item.desc,
             'translation': item.translation,
             'lines':[{'id':l.id,'t':l.title,'c':l.chapter,'l':l.line} for l in item.lines.all()]
-        }))
+        })
+
+    def get_search_result(self, q):
+        """
+        English to Paleo Search
+        """
+        trans = Word.objects.filter(translation__icontains = q)
+        results = [{'paleo':fiej(item.name[::-1]), 'translation': item.translation} for item in trans[:5] ]
+        return json.dumps({'results':results, 'n': trans.count()})
+
+    def get(self, request, *args, **kwargs):
+        w = request.GET.get('word','')
+        q = request.GET.get('q','')
+        if w: resp = self.get_word_details(w)
+        if q: resp = self.get_search_result(q)
+        return HttpResponse(resp)
 
     def post(self, request, *args, **kwargs):
         w = Word.objects.get(id = request.POST['id'])

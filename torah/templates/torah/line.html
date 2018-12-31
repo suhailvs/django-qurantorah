@@ -40,8 +40,15 @@
     </li>    
 
     <li class="list-group-item text-right"> 
-      <a class="btn btn-default btn-sm" href="/torah/{{current.title}}/{{current.chapter}}/{{current.line |add:"-1"}}/">&lt;- prev</a> 
-      <a class="btn btn-default btn-sm" href="/torah/{{current.title}}/{{current.chapter}}/{{current.line |add:"1"}}/">next -&gt;</a>
+      <div class="form-row">
+        <div class="col">
+          <input class="form-control form-control-sm" id="search" placeholder="English to Paleo">
+        </div>
+        <div class="col">
+          <a class="btn btn-default btn-sm" href="/torah/{{current.title}}/{{current.chapter}}/{{current.line |add:"-1"}}/">&lt;- prev</a> 
+          <a class="btn btn-default btn-sm" href="/torah/{{current.title}}/{{current.chapter}}/{{current.line |add:"1"}}/">next -&gt;</a>
+        </div>
+      </div>
     </li>    
     
   </ul>
@@ -147,5 +154,19 @@
     $("#word"+word_num).toggleClass('trans_word_hover');
   });
 
+  // search
+  $("#search").keypress(function( event ) {
+    if ( event.which == 13 ) {
+      const query = $(this).val();
+      $.getJSON(ajaxurl, { q: query } )
+      .done(function( data ) {
+        let resp = query + ': ' + data['n'] + 'times\n\n';
+        for (const item of data['results']){
+          resp+= item['translation'] + ' -   ' + item['paleo'] + '\n';
+        }
+        alert(resp);
+      });
+    }
+  });
 </script>
 {% endblock %}

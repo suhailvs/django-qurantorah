@@ -3,6 +3,8 @@ register = template.Library()
 
 PATTERN = 'abgdefzhjiklmnxopsqrct'
 
+fiej = lambda p: p.replace('f','v').replace('i','y').replace('e','H').replace('j','T')
+
 @register.filter(name='get_letternumber')
 def get_letternumber(letter):
     """
@@ -32,7 +34,7 @@ def replace_fie(paleoword):
     """
     Replace f -> v, i -> y, e -> H
     """
-    return paleoword.replace('f','v').replace('i','y').replace('e','H')
+    return fiej(paleoword)
 
 
 from torah.models import Word
