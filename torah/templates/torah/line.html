@@ -108,7 +108,7 @@
   $('#playaudio').click(function() {
     $('.paleoline').addClass('fontred');
     const fn = $(this).data('title') + '/' + $(this).data('chapter') + '_' + $(this).data('line') + '.mp3'
-    audioElement.setAttribute('src', 'http://localhost:8000/static/audio/'+ fn);
+    audioElement.setAttribute('src', '{% static "audio" %}/'+ fn);
     audioElement.play();
   });
   // End of audio
