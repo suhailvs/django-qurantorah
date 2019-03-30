@@ -21,7 +21,7 @@ def showline(request, title='genesis', chapter=1, line=1):
 
     context = {'current': {'title':title, 'chapter':chapter, 'line':line}}
 
-    for lang in ['paleo','english','english_mtt','hebrew']:
+    for lang in ['paleo', 'english_mtt']: #,'english' ,'hebrew']:
         context[lang] = get_line(lang,context['current'])
 
         if lang == 'paleo':
@@ -33,11 +33,12 @@ def showword(request):
     """
     To display data in jTip
     """
+    fp = os.path.join(settings.BASE_DIR, 'torah', 'json', 'paleo', 'dictionary.json')
     w = request.GET.get('word','')
     trans = '----'
     if w:
         w = w[::-1]
-        data = json.loads(open('torah/json/paleo/dictionary.json').read())
+        data = json.loads(open(fp).read())
         for i in range(len(data['text'])):
             word = data['text'][i][0]
             if word == w:
