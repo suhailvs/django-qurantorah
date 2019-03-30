@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 
+import os
 import json
 
 from .models import Word
@@ -9,7 +11,8 @@ from .models import Word
 from .templatetags.torah_filters import fiej
 
 def get_line(lang,c):
-    data = json.loads(open('torah/json/%s/%s.json'%(lang,c['title'])).read())
+    fp = os.path.join(settings.BASE_DIR, 'torah', 'json', lang, f"{c['title']}.json")
+    data = json.loads(open(fp).read())
     return data['text'][c['chapter']-1][c['line']-1]
 
 def showline(request, title='genesis', chapter=1, line=1):
