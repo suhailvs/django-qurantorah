@@ -32,3 +32,6 @@
 + ffmpeg -i genesis.mp3 -vn -acodec copy -ss 00:04:34 -t 00:00:11 genesis/1_30.mp3
 
 
++ ffmpeg -i genesis.mp3 -vn -acodec copy -ss 00:05:40 -t 00:00:08 genesis/2_4.mp3
+
+
