@@ -31,6 +31,9 @@
       {% for word in paleo|get_words %}
         <a href="/torah/word/?word={{word}}" class="jTip" id="word{{forloop.counter}}" data-word="{{word}}">{{word|replace_fie}}</a>
       {% endfor %}  <br>
+      {% for word in paleo|get_words %}
+        <span style="letter-spacing: -5px;">{% for l in word %}<span class="icon-{{ l | get_letternumber }}"></span>{% endfor %}</span> 
+      {% endfor %}  <br>
       <a class="btn btn-default btn-sm" data-title="{{current.title}}" data-chapter="{{current.chapter}}" data-line="{{current.line}}" id="playaudio">play</a>
     </li>   
      <li class="list-group-item" style="font-size: 75%">
