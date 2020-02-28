@@ -1,3 +1,5 @@
+genesis mp3 in  https://librivox.org/reader/349 or my googledrive
+
 # to split mp3
 
 + ffmpeg -i genesis.mp3 -vn -acodec copy -ss 00:00:18 -t 00:00:06 genesis/1_1.mp3
