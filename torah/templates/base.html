@@ -1,4 +1,7 @@
 {% load static %}
+
+{% url 'torah:home' as torah %}
+{% url 'quran:home' as quran %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,15 +18,21 @@
     <link rel="stylesheet" href="{% static 'css/grid.css' %}">
     {% block css %}
     {% endblock %}
-    
   </head>
 
   <body>
     <div class="container"> 
       <div class="row justify-content-center">
-        <div class="col-md-8 col-sm-12">
-          <a href="/quran/">quran</a> | 
-          <a href="/torah/">torah</a>
+
+        <div class="col-md-8 col-sm-12 main-box">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link{% if torah in request.path or request.path ==  '/' %} active{% endif %}" href="{{ torah }}">Torah</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link{% if quran in request.path %} active{% endif %}" href="{{ quran }}">Quran</a>
+            </li>
+          </ul>
           {% block body %}
           {% endblock %}
         </div>

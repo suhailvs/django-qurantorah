@@ -18,13 +18,13 @@ from django.conf.urls.static import static
 
 from django.contrib import admin
 from django.urls import path, include
-from quran.views import showline
+from torah.views import showline
 # from django.views.generic import TemplateView
 urlpatterns = [
 	# path('', TemplateView.as_view(template_name="home.html")),
 	# path('q/<int:sura>/<int:aya>/<slug:title>/<int:chapter>/<int:line>/', home),
     path('', showline),
-    path('quran/', include('quran.urls')),
-    path('torah/', include('torah.urls')),  
+    path('quran/', include(('quran.urls','quran'),namespace='quran')),
+    path('torah/', include(('torah.urls','torah'),namespace='torah')),  
     path('admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

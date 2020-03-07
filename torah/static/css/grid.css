@@ -14,7 +14,7 @@ h3 {
   margin-top: 1rem;
   margin-bottom: 0;
 }
-[class*="col-"] {
+.main-box {
   padding-top: 1rem;
   padding-bottom: 1rem;
   background-color: rgba(86, 61, 124, .15);
@@ -24,4 +24,21 @@ h3 {
 hr {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+/* Tab style */
+.nav-tabs .nav-link:hover {
+  border-color: transparent;
+}
+.nav-tabs {
+  border-bottom: 1px solid #212529;
+  margin-bottom: 5px;
+}
+.nav-tabs .nav-link.active {
+  color: #212529;
+  border-bottom: 4px solid !important;
+}
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  color: #212529;
 }

@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 urlpatterns = [
     # Examples:
-    path('',views.showline),
+    path('',views.showline, name='home'),
     path('<int:sura>/<int:line>/', views.showline, name='showline'),
     path('ajaxview/', views.AjaxView.as_view()),
     # Parts : 
