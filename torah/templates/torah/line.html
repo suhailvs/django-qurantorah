@@ -13,10 +13,7 @@
       margin:5px; 
       line-height: 25px;
     }
-    .fontred {
-      font-style: italic;
-      font-weight: bold;
-    }
+    .fontred {color: red;}
   </style>
 {% endblock %}
 
@@ -28,16 +25,22 @@
     <li class="list-group-item">{{malayalam}}</li>
     <!-- <li class="list-group-item">{{english}}</li> -->
     <li class="list-group-item">{{english_mtt}}</li> 
-    <li class="list-group-item paleoline">
+    <li class="list-group-item text-right">      
+      <img src="{% static 'speaker2.svg' %}" width="20px" style="background: #ccc;top:5px;right: 5px; position:absolute; cursor: pointer;" data-title="{{current.title}}" data-chapter="{{current.chapter}}" data-line="{{current.line}}" id="playaudio">
+      <bdo dir="rtl">
+      {% for word in paleo|get_words %}
+        <span style="letter-spacing: -2px;margin-right:10px;">
+          {% for l in word %}<span class="icon-{{ l | get_letternumber }}"></span>{% endfor %}
+        </span> 
+      {% endfor %}
+      </bdo>
+    </li>
+    <li class="list-group-item">
       {% for word in paleo|get_words %}
         <a href="/torah/word/?word={{word}}" class="jTip" id="word{{forloop.counter}}" data-word="{{word}}">{{word|replace_fie}}</a>
-      {% endfor %}  <br>
-      {% for word in paleo|get_words %}
-        <span style="letter-spacing: -5px;">{% for l in word %}<span class="icon-{{ l | get_letternumber }}"></span>{% endfor %}</span> 
-      {% endfor %}  <br>
-      <a class="btn btn-default btn-sm" data-title="{{current.title}}" data-chapter="{{current.chapter}}" data-line="{{current.line}}" id="playaudio">play</a>
-    </li>   
-     <li class="list-group-item" style="font-size: 75%">
+      {% endfor %}
+    </li>
+    <li class="list-group-item" style="font-size: 75%">
       {% for word in paleo|get_words %}
         <span class="trans_word" data-n="{{forloop.counter}}">{{word|get_englishword}}</span>
       {% endfor %}
@@ -107,12 +110,12 @@
   var audioElement = document.createElement('audio');
   audioElement.addEventListener('ended', function() {
     // this.play();
-    $('.paleoline').removeClass('fontred');
+    $('bdo').removeClass('fontred');
   }, false);
   $('#playaudio').click(function() {
-    $('.paleoline').addClass('fontred');
-    const fn = $(this).data('title') + '/' + $(this).data('chapter') + '_' + $(this).data('line') + '.mp3'
-    audioElement.setAttribute('src', '{% static "audio" %}/'+ fn);
+    $('bdo').addClass('fontred');
+    const fn = `${$(this).data('title')}/${$(this).data('chapter')}_${$(this).data('line')}.mp3`;
+    audioElement.setAttribute('src', `{% static "audio" %}/${fn}`);
     audioElement.play();
   });
   // End of audio
