@@ -33,7 +33,13 @@
 </form><hr>
 
 <div class="card">
-  <div class="card-header"> {{current.sura.name}} : {{current.aya}} </div>  
+  <div class="card-header"> 
+    {{current.sura.name}} : {{current.aya}} 
+    <div class="btn-group float-right">
+      <a class="btn btn-outline-info btn-sm" href="/quran/{{current.sura.number}}/{{current.aya|add:'-1'}}/">&lt;--</a> 
+      <a class="btn btn-outline-info btn-sm" href="/quran/{{current.sura.number}}/{{current.aya|add:'1'}}/">--&gt;</a>
+    </div>
+  </div>  
   
   <ul class="list-group list-group-flush">
     <li class="list-group-item">{{translation.text}}</li>
@@ -50,8 +56,8 @@
       {% endfor %}
     </li>
     <li class="list-group-item text-right"> 
-      <a class="btn btn-default btn-sm" href="/quran/{{current.sura.number}}/{{current.aya|add:"-1"}}/">&lt;- prev</a> 
-      <a class="btn btn-default btn-sm" href="/quran/{{current.sura.number}}/{{current.aya|add:"1"}}/">next -&gt;</a>
+      <a class="btn btn-outline-info btn-sm" href="/quran/{{current.sura.number}}/{{current.aya|add:'-1'}}/">&lt;- prev</a> 
+      <a class="btn btn-outline-info btn-sm" href="/quran/{{current.sura.number}}/{{current.aya|add:'1'}}/">next -&gt;</a>
     </li>    
     
   </ul>
