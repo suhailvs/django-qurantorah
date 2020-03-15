@@ -5,6 +5,7 @@ urlpatterns = [
     path('',views.showline, name='home'),
     path('<int:sura>/<int:line>/', views.showline, name='showline'),
     path('ajaxview/', views.AjaxView.as_view()),
+    path('playaya/', views.PlayAyaView.as_view()),
     # Parts : 
 	# url(r'^(?P<sura_number>\d+)/(?P<aya_number>\d+)/$', views.aya, name='quran_aya'),
  #    url(r'^(?P<sura_number>\d+)/(?P<aya_number>\d+)/(?P<word_number>\d+)/$', views.word, name='quran_word'),

@@ -12,6 +12,7 @@
       margin:5px; 
       line-height: 25px;
     }
+    .fontred {color: red;}
   </style>
 {% endblock %}
 {% block body %}
@@ -45,6 +46,7 @@
     <li class="list-group-item">{{translation.text}}</li>
     <li class="list-group-item text-right arab">
       <!-- {{arabic.text}} -->
+      <img src="{% static 'speaker2.svg' %}" width="20px" style="background: #ccc;top:5px;right: 5px; position:absolute; cursor: pointer;" data-sura="{{current.sura.number}}" data-aya="{{current.aya}}" id="playaudio">
       {% for word in words %}
         <a class="jTip" style="cursor: pointer;" id="word{{forloop.counter}}" data-wordid="{{word.id}}" data-paleo="{{word.paleo}}"><span style="font-size: 150%">{{ word.token }}</span></a>
       {% endfor %}
@@ -96,6 +98,15 @@
 
 {% block js %}
 <script type="text/javascript">
+$('#playaudio').click(function() {
+  $('.arab').addClass('fontred');
+  $.get("/quran/playaya/", { sura: $(this).data('sura'), aya: $(this).data('aya') } )
+  .done(function( data ) {
+    // alert( "Data Loaded: " + data );
+    $('.arab').removeClass('fontred');
+  });
+});
+
 $('.trans_word').hover(function(){
   // when mouse hover on english word
   $(this).toggleClass('trans_word_hover');
